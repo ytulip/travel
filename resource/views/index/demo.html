@@ -1,0 +1,98 @@
+{% extends "_layout/index.html" %}
+{% block style %}
+<style>
+    body{min-height: 100%;background-color: #282828;}
+    .veil ul li:nth-child(2) a{
+        color:#FFD48B;
+    }
+    article{
+        font-family: "微软雅黑", serif;
+        font-size: 16px;
+        color: #FFFFFF;
+        line-height: 30px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div style="position:absolute;top:50%;left:0;right: 0;transform: translate(0,-50%);text-align: center">
+    <img src="/images/ren.png" style="width: 64px;"/>
+    <article style="margin-top: 18px;">明明同学<button onclick="printme()">打印</button><br/>
+        一位徘徊在艺术与设计的90后<br/>
+        希望通过自身对艺术的认知能自由的行走其中<br/>
+        不管是艺术，设计，交互，亦或者产品<br/>
+        甚至是代码其实都是相通相融的<br/>
+        心在生长，亦在扩展<br/>
+        静下心<br/>
+        从生活的浮躁中解脱<br/>
+        创作出真正属于内心的作品<br/>
+    </article>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    function printme(){
+        var newWindow=window.open("打印窗口","_blank");
+        newWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title></title>
+        <style type="text/css">
+        table{
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+        table th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+        table td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+    </style>
+        </head><body>
+        <table><thead>
+        <tr>
+        <th style="width:3%" class="center">
+        <label><input type="checkbox" class="ace"><span class="lbl"></span></label>
+        </th>
+        <th style="width:5%" class="center hidden-480">工单号</th>
+        <th style="width:15%" class="center hidden-480">报修区域</th>
+        <th style="width:10%" class="center hidden-480">报修事项</th>
+        <th style="width:5%" class="center hidden-480">报修用户</th>
+        <th style="width:5%" class="center hidden-480">报修时间</th>
+        <!-- <th style="width:5%" class="center hidden-480">调度人员</th>
+        <th style="width:5%" class="center hidden-480">派工时间</th> -->
+        <th style="width:5%" class="center hidden-480">报修类别</th>
+        <th style="width:5%" class="center hidden-480">维修工人</th>
+        <th style="width:5%" class="center hidden-480">维修费用</th>
+        <th style="width:5%" class="center hidden-480">维修完成</th>
+        <th style="width:5%" class="center hidden-480">客户回访</th>
+        <th style="width:5%" class="center hidden-480">工单状态</th>
+        <!-- <th style="width:5%" class="center hidden-480">到达时间</th>
+        <th style="width:5%" class="center hidden-480">维修用料</th>
+        <th style="width:5%"  class="center hidden-480">完成时间</th>
+
+        -->
+        <th class="opr-td" style="width:10%" class="center">操作</th>
+        </tr>
+        </thead>
+        <tbody><tr><td class="center"><label> <input type="checkbox" name="ids" value="516a6adb89d840f3bce4716c6b44108e" class="ace"> <span class="lbl"></span></label></td><td class="center hidden-480">161115110318</td><td class="center hidden-480">商街11栋18楼180445</td><td class="center hidden-480">世纪大酒店</td><td class="center hidden-480">业主1</td><td class="center hidden-480">2016-11-15 11:03:19</td><td class="center hidden-480">空调</td><td class="center hidden-480">工程1</td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480">未完成</td><td class="center"><div class="visible-md visible-lg hidden-sm hidden-xs btn-group"><a href="#" title="查看" onclick="check('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a><a href="#" title="保修单列表查询" onclick="checkList('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a><a href="#" title="派工" onclick="assign('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-wrench  bigger-140"></i></a></div><div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-only bigger-110"></i></button><ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"><li><a href="#" title="查看" onclick="check('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a></li><li><a href="#" title="保修单列表查询" onclick="checkList('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></li><li><a href="#" title="派工" onclick="assign('516a6adb89d840f3bce4716c6b44108e')" class="aBtnNoTD"><i class="icon-wrench  bigger-140"></i></a></li></ul></div></div></td></tr><tr><td class="center"><label> <input type="checkbox" name="ids" value="02b3ca51a6cd4e41b937444e4df13163" class="ace"> <span class="lbl"></span></label></td><td class="center hidden-480">161114233259</td><td class="center hidden-480">商街11栋18楼180445</td><td class="center hidden-480">斤斤计较</td><td class="center hidden-480">业主1</td><td class="center hidden-480">2016-11-14 23:32:59</td><td class="center hidden-480">空调</td><td class="center hidden-480">工程1</td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480">已取消</td><td class="center"><div class="visible-md visible-lg hidden-sm hidden-xs btn-group"><a href="#" title="查看" onclick="check('02b3ca51a6cd4e41b937444e4df13163')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a><a href="#" title="保修单列表查询" onclick="checkList('02b3ca51a6cd4e41b937444e4df13163')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></div><div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-only bigger-110"></i></button><ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"><li><a href="#" title="查看" onclick="check('02b3ca51a6cd4e41b937444e4df13163')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a></li><li><a href="#" title="保修单列表查询" onclick="checkList('02b3ca51a6cd4e41b937444e4df13163')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></li></ul></div></div></td></tr><tr><td class="center"><label> <input type="checkbox" name="ids" value="155102025a3348a68f178c3afb772ba6" class="ace"> <span class="lbl"></span></label></td><td class="center hidden-480">161114232138</td><td class="center hidden-480">商街11栋18楼180445</td><td class="center hidden-480">钱钱钱钱钱钱钱</td><td class="center hidden-480">业主1</td><td class="center hidden-480">2016-11-14 23:21:38</td><td class="center hidden-480">空调</td><td class="center hidden-480">工程1</td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480">待取消</td><td class="center"><div class="visible-md visible-lg hidden-sm hidden-xs btn-group"><a href="#" title="查看" onclick="check('155102025a3348a68f178c3afb772ba6')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a><a href="#" title="保修单列表查询" onclick="checkList('155102025a3348a68f178c3afb772ba6')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></div><div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-only bigger-110"></i></button><ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"><li><a href="#" title="查看" onclick="check('155102025a3348a68f178c3afb772ba6')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a></li><li><a href="#" title="保修单列表查询" onclick="checkList('155102025a3348a68f178c3afb772ba6')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></li></ul></div></div></td></tr><tr><td class="center"><label> <input type="checkbox" name="ids" value="672fe47c32e047c89730b6f2d18341aa" class="ace"> <span class="lbl"></span></label></td><td class="center hidden-480">161114231446</td><td class="center hidden-480">商街11栋18楼180445</td><td class="center hidden-480">你健健康康了</td><td class="center hidden-480">业主1</td><td class="center hidden-480">2016-11-14 23:14:46</td><td class="center hidden-480">空调</td><td class="center hidden-480">工程1</td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480"></td><td class="center hidden-480">待改期</td><td class="center"><div class="visible-md visible-lg hidden-sm hidden-xs btn-group"><a href="#" title="查看" onclick="check('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a><a href="#" title="保修单列表查询" onclick="checkList('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a><a href="#" title="派工" onclick="assign('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-wrench  bigger-140"></i></a></div><div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-only bigger-110"></i></button><ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"><li><a href="#" title="查看" onclick="check('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a></li><li><a href="#" title="保修单列表查询" onclick="checkList('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></li><li><a href="#" title="派工" onclick="assign('672fe47c32e047c89730b6f2d18341aa')" class="aBtnNoTD"><i class="icon-wrench  bigger-140"></i></a></li></ul></div></div></td></tr><tr><td class="center"><label> <input type="checkbox" name="ids" value="b0974c372fff4313855bfad856b41224" class="ace"> <span class="lbl"></span></label></td><td class="center hidden-480">161114231052</td><td class="center hidden-480">商街11栋18楼180445</td><td class="center hidden-480">后悔好纠结</td><td class="center hidden-480">业主1</td><td class="center hidden-480">2016-11-14 23:10:53</td><td class="center hidden-480">空调</td><td class="center hidden-480">工程1</td><td class="center hidden-480">0.00</td><td class="center hidden-480">2016-11-14 23:14:31.0</td><td class="center hidden-480">2016-11-15 11:07:05</td><td class="center hidden-480">已完成</td><td class="center"><div class="visible-md visible-lg hidden-sm hidden-xs btn-group"><a href="#" title="查看" onclick="check('b0974c372fff4313855bfad856b41224')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a><a href="#" title="保修单列表查询" onclick="checkList('b0974c372fff4313855bfad856b41224')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></div><div class="visible-xs visible-sm hidden-md hidden-lg"><div class="inline position-relative"><button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-only bigger-110"></i></button><ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"><li><a href="#" title="查看" onclick="check('b0974c372fff4313855bfad856b41224')" class="aBtnNoTD"><i class="icon-zoom-in  bigger-140"></i></a></li><li><a href="#" title="保修单列表查询" onclick="checkList('b0974c372fff4313855bfad856b41224')" class="aBtnNoTD"><i class="icon-file-text-alt  bigger-140"></i></a></li></ul></div></div></td></tr></tbody>
+        </body></table></html>`);
+        //$(newWindow.document).find('.opr-td').remove();
+        $(newWindow.document).find('tr').each(function(){
+            $(this).find('td:last,th:last').remove();
+        });
+        newWindow.document.close();
+        newWindow.print();
+        newWindow.close();
+    }
+</script>
+{% endblock %}

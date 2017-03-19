@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="/public/assets/css/bootstrap.css"/>
+    <link href="/public/assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="//vjs.zencdn.net/5.11/video-js.min.css" rel="stylesheet">
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+    <script src="//vjs.zencdn.net/5.11/video.min.js"></script>
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+
+        .video-js:hover{
+            background: none;
+        }
+
+        .vjs-user-active{
+            background: none;
+        }
+
+        .vjs-big-play-button{
+            background: none !important;
+        }
+
+        .video-js .vjs-big-play-button:hover{
+            background: none;
+        }
+
+
+        .video-js .vjs-big-play-button {
+            font-size: 0;
+            width: 48px;
+            height: 48px;
+            background: none;
+            /*font-size: 1.5em;*/
+            /*width: 8rem;*/
+            /*height: 8rem;*/
+            /*outline: 0;*/
+            /*border: 0.5em solid #dc3f33;*/
+            /*background-color: rgba(0,0,0,0.25);*/
+            /*border-radius: 50%;*/
+            /*cursor: pointer;*/
+            -webkit-transform: translateZ(0) translate(-50%, -50%);
+            transform: translateZ(0) translate(-50%, -50%);
+            -webkit-transition: opacity 0.25s linear;
+            /*transition: opacity 0.25s linear;*/
+        }
+
+
+        .video-js .vjs-big-play-button:before {
+            font-size: 0;
+            background-image:url('/public/images/play.png');
+            background-size: 48px 48px;
+            /*text-align: center;*/
+            /*font-size: 5em;*/
+            /*padding-left: 0.1em;*/
+            /*width: 8rem;*/
+            /*height: 1rem;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*color:#dc3f33;*/
+            /*-webkit-transform: translateZ(0) translate(-50%, -50%);*/
+            /*transform: translateZ(0) translate(-50%, -50%);*/
+        }
+
+        .img-wrap img{
+            width: 100%;
+        }
+
+        .too-height{
+            padding: 0 160px;
+            background-color: #000000;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .content-panel{padding: 0 12px;}
+            .header-wrap{width: 100%;}
+            .content-container{width: 100%;}
+
+            .content-container .articles {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .video-wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uD92DuzK9m4bBlMDQs4dsbHU"></script>
+    <title>地图展示</title>
+</head>
+<body>
+<header>
+    <div class="header-wrap">
+        <img src="/public/images/travel_logo_03.png" style="height: 33px"/>
+        <ul class="top-menu-list">
+            <li class="top-menu-item top-menu-item-active">游记</li>
+            <li class="top-menu-item">随手拍</li>
+        </ul>
+    </div>
+</header>
+<div class="map-wrapper">
+<div id="allmap"></div>
+</div>
+<div class="content-container">
+    <div class="content-panel articles">
+        <article>
+            <h1>总要找一个地方开始——Hong Kong</h1>
+            <p>2016年3月，她从老家来到了深圳。据说一起旅游能巩固和提升感情。于是，在抵达的第二个周末，我们收拾行囊，去了和深圳只有一河之隔的香港。</p>
+
+            <p>和大多数人一样，在出发之前，我们做了一下简单的攻略。在淘宝上买了1块钱一个的团签服务和两张八达通卡，在携程上定了一晚的住宿。头天晚上剪了个短发，约朋友们吃了烤鱼。第二天一早就坐地铁，去罗湖了。到了罗湖出境大厅换了点港币，发现并没有带八达通卡，于是在拿团签的时候买了两张地铁1日票。当天人并不多，很顺利就过关了。</p>
+
+            <p>深圳到香港真正超级近，我们到香港市区的时候还不到十点。我们从佐敦站下车，在义顺牛奶公司吃了点早餐。在去之前听说义顺牛奶公司的东西双皮奶好吃，吃后觉得太甜了，另外 点的猪扒包，真心难吃。饭后，我们沿着弥顿道，转到梳士巴利道一直逛到了海港城。海港城就坐落在维多利亚港边上，从来没有见过海的她可兴奋了。这里吐槽一下，以前带她爬深圳第一高峰梧桐山的时候，指着盐田港说“你看海”“不可能，这么小”“还停了航母”“没看到”。她以为我带她看了假海。逛街怎么少的了拍照：</p>
+
+            <div class="img-wrap too-height">
+                <img src="/travel/hk/hk1.jpg"/>
+            </div>
+
+            <p>维多利亚港的真的是超级漂亮。</p>
+            <div class="video-wrap">
+                <video  id="v-h-mp4" class="video-js vjs-default-skin vjs-big-play-centered">
+                    <source src= "/travel/hk/vitoria_harbour.mp4" type="video/mp4"/>
+                </video>
+                <br/>
+                <br/>
+            </div>
+
+
+        </article>
+    </div>
+    <!--<div class="content-panel sticks"></div>-->
+</div>
+</body>
+</html>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(104.979002, 29.192906),5);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    var planIcon = new BMap.Icon("public/images/markers_02.png",new BMap.Size(19,25));
+
+    var hongKongPoint = new BMap.Point(114.179324,22.298374); //香港定位到海港城
+    var marker = new BMap.Marker(hongKongPoint);
+    map.addOverlay(marker);
+
+    var MacaoPoint = new BMap.Point(113.571859,22.150548); //澳门定位到威尼斯商人
+    map.addOverlay(new BMap.Marker(MacaoPoint));
+
+    var GuilinPoint = new BMap.Point(110.4994,24.779775);//桂林定位到阳朔
+    map.addOverlay(new BMap.Marker(GuilinPoint));
+
+    var XiamenPoint = new BMap.Point(118.131997,24.505669);//厦门定位到阳朔
+    map.addOverlay(new BMap.Marker(XiamenPoint));
+
+    var ChongqingPoint = new BMap.Point(107.741275,29.500443);//重庆定位到仙女镇
+    map.addOverlay(new BMap.Marker(ChongqingPoint));
+
+    //三亚，云南，桂林(!!!!)，上海，北京，马尔代夫，日本（北海道）法国（巴黎）
+    var Sanya = new BMap.Point(109.517496,18.260689);//三亚定位到亚龙湾
+    var Yunlan = new BMap.Point(100.19397,25.918969);//云南定位到洱海
+    var Shanghai = new BMap.Point(121.443553,31.19684);//上海定位到徐家汇
+    var Beijing = new BMap.Point(116.40401,39.909701);//北京定位到天安门
+    var Hokkaido = new BMap.Point(141.323128,43.062344);//北海道定位到北海道
+    var Pairs = new BMap.Point(2.349365,48.898284);//巴黎定位到埃菲尔铁塔
+    var Maldives = new BMap.Point(73.528506,4.285916);//马尔代夫定位到马累
+    var Thailand = new BMap.Point(100.222984,13.892869);//泰国定位到曼谷
+    var Yading = new BMap.Point(100.348666,28.458833);//亚丁稻城
+    var Lhasa = new BMap.Point(91.121169,29.651971);//西藏拉萨
+
+    map.addOverlay(new BMap.Marker(Sanya,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Yunlan,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Shanghai,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Beijing,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Hokkaido,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Pairs,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Maldives,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Thailand,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Yading,{icon:planIcon}));
+    map.addOverlay(new BMap.Marker(Lhasa,{icon:planIcon}));
+
+    $(function(){
+        videojs('v-h-mp4',{
+            fluid: true,
+            controls:true,
+        });
+    });
+
+
+</script>

@@ -1,0 +1,85 @@
+body{
+    font-family:Arial,"Lucida Grande","Microsoft Yahei","Hiragino Sans GB","Hiragino Sans GB W3",SimSun,"PingFang SC",STHeiti;
+}
+
+header{
+    background-color: #ffffff;
+    line-height: 60px;
+    height: 60px;
+    position: fixed;
+    top:0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+}
+.header-wrap{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.map-wrapper{
+    margin-top: 60px;
+    height: 440px;
+}
+
+.content-container{
+    width: 1000px;
+    margin: 0 auto;
+}
+.content-container{
+    text-align: center;
+}
+
+.content-container .content-panel{
+    display: inline-block;
+}
+
+.content-container .articles{
+    width: 700px;
+    text-align: left;
+}
+
+
+.articles h1{
+    line-height: 35px;
+    overflow: hidden;
+    font-size: 24px;
+    color: #a6551f;
+    font-weight: normal;
+}
+
+.articles p{
+    font-size: 14px;
+    line-height: 24px;
+    color:#4c4d4d;
+}
+
+.video-wrap{
+    width: 700px;
+    overflow: hidden;
+}
+
+.video-wrap video{
+    display: block;
+    width: 100%;
+}
+/*.content-container .sticks{*/
+    /*width: 220px;*/
+/*}*/
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 540px) {
+
+}
+
+
+@media only screen and (max-width: 540px) {
+
+}
+
+@media only screen and (max-width: 540px) {
+
+}
