@@ -13,10 +13,26 @@ class ViewServer{
     private function __construct()
     {
         $loader = new Twig_Loader_Filesystem(resource_path . '/views');
+        $function = new Twig_SimpleFunction('versionfile', function ($val) {
+            $res = pathinfo($val);
+            $result = $val;
+            switch($res['extension']){
+                case 'css':
+                    $result = '<link rel="stylesheet" type="text/css" href="'.$val.'?version='.time().'">';
+                    break;
+                case 'js':
+                    $result = '<script src="'.$val.'?version='.time().'"></script>';
+                    break;
+                default:
+                    break;
+            }
+            return $result;
+        });
         $this->_twig = new Twig_Environment($loader, array(
             'cache' => storage_path . '/views',
             'debug' => true,
         ));
+        $this->_twig->addFunction($function);
     }
     //单例方法
     public static function singleton()

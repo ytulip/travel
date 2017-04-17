@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>添加内容</title>
+    <script src="/public/js/react.js"></script>
+    <script src="/public/js/react-dom.js"></script>
+    <script src="/public/js/browser.min.js"></script>
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+
+        .video-js:hover{
+            background: none;
+        }
+
+        .vjs-user-active{
+            background: none;
+        }
+
+        .vjs-big-play-button{
+            background: none !important;
+        }
+
+        .video-js .vjs-big-play-button:hover{
+            background: none;
+        }
+
+
+        .video-js .vjs-big-play-button {
+            font-size: 0;
+            width: 48px;
+            height: 48px;
+            background: none;
+            /*font-size: 1.5em;*/
+            /*width: 8rem;*/
+            /*height: 8rem;*/
+            /*outline: 0;*/
+            /*border: 0.5em solid #dc3f33;*/
+            /*background-color: rgba(0,0,0,0.25);*/
+            /*border-radius: 50%;*/
+            /*cursor: pointer;*/
+            -webkit-transform: translateZ(0) translate(-50%, -50%);
+            transform: translateZ(0) translate(-50%, -50%);
+            -webkit-transition: opacity 0.25s linear;
+            /*transition: opacity 0.25s linear;*/
+        }
+
+
+        .video-js .vjs-big-play-button:before {
+            font-size: 0;
+            background-image:url('/public/images/play.png');
+            background-size: 48px 48px;
+            /*text-align: center;*/
+            /*font-size: 5em;*/
+            /*padding-left: 0.1em;*/
+            /*width: 8rem;*/
+            /*height: 1rem;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*color:#dc3f33;*/
+            /*-webkit-transform: translateZ(0) translate(-50%, -50%);*/
+            /*transform: translateZ(0) translate(-50%, -50%);*/
+        }
+
+        .img-wrap img{
+            width: 100%;
+        }
+
+        .too-height{
+            padding: 0 160px;
+            background-color: #000000;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .content-panel{padding: 0 12px;}
+            .header-wrap{width: 100%;}
+            .content-container{width: 100%;}
+
+            .content-container .articles {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .video-wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .work-panel{
+            width: 680px;
+            text-align: left;
+        }
+
+
+        .work-bar ul{display:none;margin: 0;padding: 0}
+        .work-bar ul li{display: inline-block;line-height: 68px;margin-left: 24px;}
+        .work-bar a{cursor: pointer;}
+        .work-bar span{display: inline-block;line-height: 28px;vertical-align: middle;}
+
+        .work-bar [class $= "icon"]{
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+            margin-right: 10px;
+            /*background: url(/images/post/new_notes/nn_v2/nn_sprite_v25.png) -178px -29px no-repeat;*
+             */
+            background-image: url('/public/images/nn_sprite_v25.png');
+            background-repeat: no-repeat;
+            /*line-height: 200px;*/
+            overflow: hidden;
+            vertical-align: middle;
+        }
+
+        .add-icon{
+            background-position: -120px 0;
+        }
+
+        .add-txt-icon{
+            background-position: -207px -29px;
+        }
+        .add-img-icon{
+            background-position: -178px -29px;;
+        }
+        .add-media-icon{background-position:-236px -29px;}
+
+        .textare-active{
+            width: 600px;
+            overflow: hidden;
+        }
+
+        textarea{
+            width:600px;
+            height: 208px;
+            box-sizing: border-box;
+            padding: 7px;
+        }
+        .save-btn{
+            width: auto;
+            margin-right: 0;
+            background: #ffa800;
+            padding: 0 25px;
+            line-height: 26px;
+            height: 26px;
+            color: #fff;
+            font-size: 14px;
+            float: right;
+            border-radius: 5px;
+            margin-top: 25px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .edit_again{
+            width: 23px;
+            height: 20px;
+            background: url('/public/images/sprite_v33.png') -198px -427px no-repeat;
+            line-height: 200px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        /*.editagainrotate{*/
+        /*transform: rotate(45deg);*/
+        /*-webkit-transform: rotate(45deg);*/
+        /*-moz-transform: rotate(45deg);*/
+        /*}*/
+
+        .editbarshow{
+            display: inline-block !important;
+        }
+
+        /*.work-area{*/
+        /*margin-top: 8px;*/
+        /*}*/
+
+        .work-bar{line-height: 68px;}
+        textarea{outline: none;}
+
+
+        .img-upload-container{font-size: 0;border: solid 1px #e5e5e5;box-shadow: 0 3px 3px rgba(0,0,0,.1);padding: 14px 24px;}
+        .img-mobile,.img-pc{display: inline-block;font-size: 16px;text-align: center;}
+
+        .img-mobile{border-right: 1px solid #e5e5e5;width: 246px;}
+
+        .imageshow img{width: 100%;}
+
+    </style>
+</head>
+<body>
+<div class="content-container">
+    <!--<div class="content-panel sticks"></div>-->
+    <div>
+        <div class="work-panel" id="workpanel">
+            <div v-for="segement in essay">
+                <editor-bar></editor-bar>
+            </div>
+
+            <button v-on:click="add">这里是个测试</button>
+
+            <!--<div class="work-bar">-->
+            <!--<a class="add-icon"></a>-->
+            <!--<ul>-->
+            <!--<li><a><i class="add-txt-icon"></i><span>添加文字</span></a></li>-->
+            <!--<li><a><i class="add-img-icon"></i><span>添加照片</span></a></li>-->
+            <!--<li><a><i class="add-media-icon"></i><span>添加视频</span></a></li>-->
+            <!--<li></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--<div class="work-area textare-active">-->
+            <!--<textarea placeholder="此处添加文字"></textarea>-->
+            <!--</div>-->
+        </div>
+        <div class="catalogue"></div>
+    </div>
+</div>
+</body>
+<script src="/public/vue.js"></script>
+<script type="text/x-template" id="editor-bar">
+    <div class="work-bar-wrapper">
+        <input />
+    </div>
+</script>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script>
+    let count = 1;
+
+    let obj = {
+        datas:'123',
+        love:'456'
+    };
+
+    Vue.component('editor-bar', {template: '#editor-bar',
+        props:['dataid','defaultvalue'],
+        data:function(){
+            return {};
+        }
+    });
+    new Vue({
+        'el':'#workpanel',
+        data:{essay:[],count:0},
+        created:function(){
+           this.essay['love'] = 1;
+        },
+        methods:{
+            add:function() {
+//                this.essay['a' + this.count++] = this.count;
+                this.essay.push([5]);
+                console.log(this.essay);
+        }
+        }
+    });
+</script>
+</html>

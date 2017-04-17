@@ -10,4 +10,19 @@ class IndexController{
         $decodedData = base64_decode($imgdata);
         file_put_contents('11.gif',$decodedData );
     }
+
+    public function savework(){
+        $filename = \MM\Kits::getMillisecond() . '.jpg';
+        PostImage::save(index_path . '/images/work/' . $filename);
+        echo json_encode(array('status'=>true,'path'=>'/images/work/' . $filename,'type'=>IndexController::input('type',1)));
+        exit;
+    }
+
+    static public function input($index,$default=''){
+        if(isset($_REQUEST[$index]) && ($_REQUEST[$index] !== '')){
+            return $_REQUEST[$index];
+        }else{
+            return $default;
+        }
+    }
 }

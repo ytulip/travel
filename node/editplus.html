@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>添加内容</title>
+    <script src="/public/js/react.js"></script>
+    <script src="/public/js/react-dom.js"></script>
+    <script src="/public/js/browser.min.js"></script>
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+
+        .video-js:hover{
+            background: none;
+        }
+
+        .vjs-user-active{
+            background: none;
+        }
+
+        .vjs-big-play-button{
+            background: none !important;
+        }
+
+        .video-js .vjs-big-play-button:hover{
+            background: none;
+        }
+
+
+        .video-js .vjs-big-play-button {
+            font-size: 0;
+            width: 48px;
+            height: 48px;
+            background: none;
+            /*font-size: 1.5em;*/
+            /*width: 8rem;*/
+            /*height: 8rem;*/
+            /*outline: 0;*/
+            /*border: 0.5em solid #dc3f33;*/
+            /*background-color: rgba(0,0,0,0.25);*/
+            /*border-radius: 50%;*/
+            /*cursor: pointer;*/
+            -webkit-transform: translateZ(0) translate(-50%, -50%);
+            transform: translateZ(0) translate(-50%, -50%);
+            -webkit-transition: opacity 0.25s linear;
+            /*transition: opacity 0.25s linear;*/
+        }
+
+
+        .video-js .vjs-big-play-button:before {
+            font-size: 0;
+            background-image:url('/public/images/play.png');
+            background-size: 48px 48px;
+            /*text-align: center;*/
+            /*font-size: 5em;*/
+            /*padding-left: 0.1em;*/
+            /*width: 8rem;*/
+            /*height: 1rem;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*color:#dc3f33;*/
+            /*-webkit-transform: translateZ(0) translate(-50%, -50%);*/
+            /*transform: translateZ(0) translate(-50%, -50%);*/
+        }
+
+        .img-wrap img{
+            width: 100%;
+        }
+
+        .too-height{
+            padding: 0 160px;
+            background-color: #000000;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .content-panel{padding: 0 12px;}
+            .header-wrap{width: 100%;}
+            .content-container{width: 100%;}
+
+            .content-container .articles {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .video-wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .work-panel{
+            width: 680px;
+            text-align: left;
+        }
+
+
+        .work-bar ul{display:none;margin: 0;padding: 0}
+        .work-bar ul li{display: inline-block;line-height: 68px;margin-left: 24px;}
+        .work-bar a{cursor: pointer;}
+        .work-bar span{display: inline-block;line-height: 28px;vertical-align: middle;}
+
+        .work-bar [class $= "icon"]{
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+            margin-right: 10px;
+            /*background: url(/images/post/new_notes/nn_v2/nn_sprite_v25.png) -178px -29px no-repeat;*
+             */
+            background-image: url('/public/images/nn_sprite_v25.png');
+            background-repeat: no-repeat;
+            /*line-height: 200px;*/
+            overflow: hidden;
+            vertical-align: middle;
+        }
+
+        .add-icon{
+            background-position: -120px 0;
+        }
+
+        .add-txt-icon{
+            background-position: -207px -29px;
+        }
+        .add-img-icon{
+            background-position: -178px -29px;;
+        }
+        .add-media-icon{background-position:-236px -29px;}
+
+        .textare-active{
+            width: 600px;
+            overflow: hidden;
+        }
+
+        textarea{
+            width:600px;
+            height: 208px;
+            box-sizing: border-box;
+            padding: 7px;
+        }
+        .save-btn{
+            width: auto;
+            margin-right: 0;
+            background: #ffa800;
+            padding: 0 25px;
+            line-height: 26px;
+            height: 26px;
+            color: #fff;
+            font-size: 14px;
+            float: right;
+            border-radius: 5px;
+            margin-top: 25px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .edit_again{
+            width: 23px;
+            height: 20px;
+            background: url('/public/images/sprite_v33.png') -198px -427px no-repeat;
+            line-height: 200px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        /*.editagainrotate{*/
+        /*transform: rotate(45deg);*/
+        /*-webkit-transform: rotate(45deg);*/
+        /*-moz-transform: rotate(45deg);*/
+        /*}*/
+
+        .editbarshow{
+            display: inline-block !important;
+        }
+
+        /*.work-area{*/
+        /*margin-top: 8px;*/
+        /*}*/
+
+        .work-bar{line-height: 68px;}
+        textarea{outline: none;}
+
+
+        .img-upload-container{font-size: 0;border: solid 1px #e5e5e5;box-shadow: 0 3px 3px rgba(0,0,0,.1);padding: 14px 24px;}
+        .img-mobile,.img-pc{display: inline-block;font-size: 16px;text-align: center;}
+
+        .img-mobile{border-right: 1px solid #e5e5e5;width: 246px;}
+
+        .imageshow img{width: 100%;}
+
+    </style>
+</head>
+<body>
+<div class="content-container">
+    <!--<div class="content-panel sticks"></div>-->
+    <div>
+        <div class="work-panel" id="workpanel">
+            <div id="vforlist">
+                <!--<editor-bar v-bind:dataid="segement.key" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved" v-bind:defaultvalue="segement" :key="segement.key"></editor-bar>-->
+            </div>
+            <!--<div class="work-bar">-->
+            <!--<a class="add-icon"></a>-->
+            <!--<ul>-->
+            <!--<li><a><i class="add-txt-icon"></i><span>添加文字</span></a></li>-->
+            <!--<li><a><i class="add-img-icon"></i><span>添加照片</span></a></li>-->
+            <!--<li><a><i class="add-media-icon"></i><span>添加视频</span></a></li>-->
+            <!--<li></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--<div class="work-area textare-active">-->
+            <!--<textarea placeholder="此处添加文字"></textarea>-->
+            <!--</div>-->
+        </div>
+        <div class="catalogue"></div>
+    </div>
+</div>
+</body>
+<script src="/public/vue.js"></script>
+<script type="text/x-template" id="editor-bar">
+    <div class="work-bar-wrapper" v-bind:data-id="dataid">
+        <input type="file" v-on:change="imagechange" style="display: none;" ref="uploadbtn"/>
+        <div class="work-bar">
+            <a class="add-icon" v-on:click="spread"></a>
+            <ul v-bind:class="{editbarshow:barSpread}">
+                <li><a v-on:click="setCurrentEdit(1)"><i class="add-txt-icon"></i><span>添加文字</span></a></li>
+                <li><a v-on:click="setCurrentEdit(2)"><i class="add-img-icon"></i><span>添加照片</span></a></li>
+                <li><a v-on:click="setCurrentEdit(4)"><i class="add-media-icon"></i><span>添加视频</span></a></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="work-area textare-active">
+            <div v-if="currentEdit & importtext" style="overflow: hidden;">
+                <textarea placeholder="此处添加文字" v-model="content"></textarea>
+                <div><button class="save-btn" v-on:click="textareSave">完成</button></div>
+            </div>
+
+            <div v-if="currentEdit & importimage" style="overflow: hidden;margin-bottom: 20px;">
+                <div class="img-upload-container">
+                    <div class="img-mobile">
+                        <img width="156px" src="https://graphis.zhuyan.me/data/ytulipberry.jpg">
+                        <p style="margin: 0;">上传手机照片</p>
+                        <div style="font-size: 12px;">用微信二维码扫描轻松上传手机照片</div>
+                    </div>
+                    <div class="img-pc" style="vertical-align: top;
+    margin-top: 54px;">
+                        <div>
+                            <a style="background-color: #ff9d00;
+    padding: 0 28px;
+    line-height: 40px;
+    display: inline-block;
+    border-radius: 6px;color:#ffffff;margin-left: 77px;cursor: pointer" v-on:click="triggerInputFile">上传本地图片</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="currentEdit & importvedio" style="overflow: hidden;">
+                上传视频
+            </div>
+
+            <p v-if="currentShow & showtext">
+                <span class="_j_wordhtml">{{ textval }}</span>
+                <a role="button" class="edit_again" v-on:click="rewriteTextarea">编辑</a>
+            </p>
+
+            <div class="imageshow" v-if="currentShow & imageshow">
+                <img v-bind:src="imgval"/>
+            </div>
+
+        </div>
+    </div>
+</script>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script>
+    Vue.component('editor-bar', {template: '#editor-bar',
+        props:['dataid','defaultvalue'],
+        data:function(){
+            var datas = {content:'',textareshow:1,barSpread:0,currentEdit:0,currentShow:this.defaultvalue.data.type};
+
+            console.log('default:' + JSON.stringify(this.defaultvalue));
+
+            datas.showtext = datas.importtext = 1<<0;
+            datas.imageshow = datas.importimage = 1<<1;
+            datas.showvedio = datas.importvedio = 1<<2;
+            datas.textval = '';
+            datas.imgval = '';
+
+            switch(parseInt(datas.currentShow)){
+                case datas.showtext:
+                    datas.textval = this.defaultvalue.data.val;
+                    break;
+                case datas.imageshow:
+                    datas.imgval = this.defaultvalue.data.val;
+                    break;
+                case datas.showvedio:
+                    break;
+            }
+
+            return datas;
+        },
+        methods:{
+            textareSave:function(e){
+                // this.textareshow = 0;
+//                console.log('hello, controller center!!');
+                // this.currentEdit = 0;
+                this.currentShow = this.showtext;
+                this.textval =  this.content;
+                this.$emit('i-have-done',{'dataid':this.dataid,'data':{'type':this.currentShow,'val':this.textval}});
+            },
+            spread:function(){
+                return this.barSpread?(this.barSpread = 0):(this.barSpread = 1);
+            },
+            setCurrentEdit:function(enableValue){
+                this.currentEdit = enableValue;
+                /*console.log(enableValue);*/
+            },
+            rewriteTextarea:function(){
+                this.textareshow = 1;
+                this.currentEdit = this.importtext;
+                this.content = this.textval;
+            },
+            triggerInputFile:function(e){
+                this.$refs.uploadbtn.click();
+            },
+            imagechange:function(e){
+                if(e.currentTarget.value){
+                    var formData = new FormData();
+                    console.log(e.currentTarget.files[0]);
+                    formData.append("file" , e.currentTarget.files[0]);//获取文件法二
+                    (function(a){
+                        $.ajax({
+                            url:'/savework',
+                            data:formData,
+                            type:'post',
+                            contentType: false,
+                            processData: false,
+                            dataType:'json',
+                            success:function(data){
+                                if(data.status){
+
+                                    if(a.currentShow){
+                                        //当前值需要转移
+                                        var currentData = '';
+
+                                        switch(a.currentShow){
+                                            case a.showtext:
+                                                currentData = a.textval;
+                                                break;
+                                            case a.imageshow:
+                                                currentData = a.imgval;
+                                                break;
+                                            case a.showvedio:
+                                                break;
+                                        }
+                                        a.$emit('i-have-done',{'dataid':a.dataid,'data':{'type':a.currentShow,'val':currentData}});
+                                    }
+
+                                    a.currentShow = a.imageshow;
+                                    a.imgval = data.path;
+                                }
+                            }
+                        });
+                    })(this);
+                }
+            }
+        }
+    });
+    new Vue({
+        'el':'#workpanel',
+        data:{essay:[{key:'A001',data:{type:2,val:'/images/work/1492137054740.jpg'}},{key:'A002',data:{type:1,val:'这张图片'}}],childIndex:1,essayOrder:[]},
+        created:function(){
+            let i = 0;
+            for(; i < this.essay.length; i++){
+                this.essayOrder.push(this.essay[i].key);
+                $('#vforlist').append('<editor-bar v-bind:dataid="essay['+i+'].key" v-bind:defaultvalue="essay['+i+']" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved"></editor-bar>');
+            }
+//            this.essay.forEach(function(oneItem,indOfItem){
+//                console.log('<editor-bar v-bind:dataid="essay['+indOfItem+'].key" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved" v-bind:defaultvalue="'+essay['+indOfItem+']+'" :key="essay['+indOfItem+'].key"></editor-bar>');
+////                $('#vforlist').append('<editor-bar v-bind:dataid="essay['+indOfItem+'].key" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved" v-bind:defaultvalue="'+essay['+indOfItem+']+'" :key="essay['+indOfItem+'].key"></editor-bar>');
+//            });
+        },
+        methods:{
+            itemDone:function(e){
+                console.log(e);
+                console.log(this.isLastKeyInData(e.dataid));
+
+                var newKey = this.childIndex++;
+                this.essay.push({key:'B' + (newKey),data:e.data});
+
+                var indOfItem = this.indexInData(e.dataid);
+                this.essayOrder.splice(indOfItem,0,{key:'B' + (newKey),data:e.data});
+
+                var essayLastIndex = this.essay.length - 1;
+
+//                $('#vforlist').append('<editor-bar v-bind:dataid="essay['+essayLastIndex+'].key" v-bind:defaultvalue="essay['+essayLastIndex+']" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved"></editor-bar>');
+
+//                $('.work-bar-wrapper[data-id="'+e.dataid+'"]').after('<editor-bar v-bind:dataid="essay['+essayLastIndex+'].key" v-bind:defaultvalue="essay['+essayLastIndex+']" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved"></editor-bar>');
+
+//                Vue.extend({
+//                    template:'<editor-bar v-bind:dataid="essay['+essayLastIndex+'].key" v-bind:defaultvalue="essay['+essayLastIndex+']" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved"></editor-bar>',
+//                });
+
+
+//                new
+//                this.
+//                this.$forceUpdate();
+//                this.$mount('editor-bar');
+//                this.$compile('<editor-bar v-bind:dataid="essay['+essayLastIndex+'].key" v-bind:defaultvalue="essay['+essayLastIndex+']" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved"></editor-bar>');
+//                $('.work-bar-wrapper[data-id="'+e.dataid+'"]').after();
+
+
+//                if(this.isLastKeyInData(e.dataid)){
+//                    this.essay.push({key:'B' + (this.childIndex++),data:e.data});
+//                }else{
+////                    var indOfItem = this.indexInData(e.dataid);
+////                    console.log('位置:' + indOfItem);
+////                    this.essay.splice(indOfItem,0,{key:'B' + (this.childIndex++),data:e.data});
+//                }
+            },
+            itemMoved:function(e){
+
+            },
+            indexInData:function(keyVal){
+                console.log(keyVal);
+                var indOfItem = 0;
+                this.essayOrder.forEach(function(obj,ind){
+                    console.log(ind);
+                    if(obj == keyVal){
+                        indOfItem = ind + 1;
+                        return false;
+                    }
+                })
+                return indOfItem;
+            },
+            isLastKeyInData:function(keyVal){
+                return (this.essay[this.essay.length - 1]['key'] == keyVal)?true:false;
+            }
+        }
+    });
+</script>
+</html>
