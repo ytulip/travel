@@ -194,7 +194,14 @@
         .img-mobile{border-right: 1px solid #e5e5e5;width: 246px;}
 
         .imageshow img{width: 100%;margin-top: 20px;}
+        .draft-mani{    text-align: left;
+            color: #ff9e00;
+            font-size: 20px;cursor: pointer;}
 
+        .img-candy-paper{position:relative;text-align:center;overflow:hidden;font-size: 0;}
+        .img-candy-paper a{overflow: hidden;display: inline-block;height: 27px;}
+        .img-candy-paper img{max-width:100%;margin: 0;display: inline-block}
+        .img-candy-paper .mani{position:absolute;top:0;right: 0;background-color: #030303;opacity: .4;cursor: pointer;display: none;}
     </style>
 </head>
 <body>
@@ -217,6 +224,9 @@
             <!--<div class="work-area textare-active">-->
             <!--<textarea placeholder="此处添加文字"></textarea>-->
             <!--</div>-->
+        </div>
+        <div class="draft-mani">
+            <a id="save-draft">保存草稿</a>
         </div>
         <div class="catalogue"></div>
     </div>
@@ -270,7 +280,10 @@
                 <a role="button" class="edit_again" v-on:click="rewriteTextarea">编辑</a>
             </p>
 
-            <div class="imageshow" v-if="currentShow & imageshow">
+            <div class="imageshow img-candy-paper" v-if="currentShow & imageshow">
+                <div class="mani">
+                    <a v-on:click="closeImg"><img  style="width: 27px;" src="/public/images/close.png"/></a>
+                </div>
                 <img v-bind:src="imgval"/>
             </div>
 
@@ -279,6 +292,19 @@
 </script>
 <script src="/public/assets/js/jquery-1.11.1.js"></script>
 <script>
+    function findIndexByPrimaryAttr(stack,needleAttr,needle){
+        var index = false;
+        stack.forEach(function(obj,ind){
+            if(obj[needleAttr] == needle){
+                index = ind;
+                return false;
+            }
+            return true;
+        });
+        return index;
+    }
+
+
     Vue.component('editor-bar', {template: '#editor-bar',
         props:['dataid','defaultvalue'],
         data:function(){
@@ -291,6 +317,7 @@
             datas.showvedio = datas.importvedio = 1<<2;
             datas.textval = '';
             datas.imgval = '';
+            datas.currentVal = this.defaultvalue.data;
 
             switch(parseInt(datas.currentShow)){
                 case datas.showtext:
@@ -311,7 +338,11 @@
                 this.currentEdit = 0;
                 this.currentShow = this.showtext;
                 this.textval =  this.content;
-                this.$emit('i-have-done',{'dataid':this.dataid,'data':val});
+                if((!this.content) && (val.type == 0 || val.type != (this.showtext))){
+                    this.$emit('i-have-moved',{'dataid':this.dataid,'data':null});
+                }else{
+                    this.$emit('i-have-done',{'dataid':this.dataid,'data':val,newdata:this.currentRecord()});
+                }
             },
             spread:function(){
                 return this.barSpread?(this.barSpread = 0):(this.barSpread = 1);
@@ -364,37 +395,26 @@
                             success:function(data){
                                 if(data.status){
 
-                                    if(a.currentShow){
-                                        //当前值需要转移
-                                        var currentData = '';
-
-                                        switch(a.currentShow){
-                                            case a.showtext:
-                                                currentData = a.textval;
-                                                break;
-                                            case a.imageshow:
-                                                currentData = a.imgval;
-                                                break;
-                                            case a.showvedio:
-                                                break;
-                                        }
-                                        a.$emit('i-have-done',{'dataid':a.dataid,'data':{'type':a.currentShow,'val':currentData}});
-                                    }
-
+                                    let oldData = a.currentShow();
                                     a.currentShow = a.imageshow;
                                     a.imgval = data.path;
+                                    a.$emit('i-have-done',{'dataid':a.dataid,'data':oldData,'newdata':a.currentShow()});
                                 }
                             }
                         });
                     })(this);
                 }
+            },
+            closeImg:function(e){
+                this.$emit('i-have-moved',{'dataid':this.dataid,'data':null});
             }
         }
     });
 
     let pageConfig = {
         essay:[{key:'A001',data:{type:2,val:'/images/work/1492137054740.jpg'}},{key:'A002',data:{type:1,val:'这张图片'}}],
-        childIndex:1
+        childIndex:1,
+        componentList:[]
     };
 
     function isLastWorkpanelItem(dataid){
@@ -410,12 +430,13 @@
                 $('#workpanel').append(tmplateStr);
             }
             let el = '.workpanel-item[data-id="'+ obj.key +'"]';
-            new Vue({
+            let vueComponent = new Vue({
                 'el':el,
-                 data:{record:obj},
+                 data:{record:obj,currentData:obj.data},
                  methods:{
                     itemDone(e){
                         let dataid = e.dataid;
+                        this.currentData = e.newdata;
 
                         /**
                          * 有种情况是不会增加的
@@ -429,50 +450,56 @@
                             }]);
                         }
                     },
-                    itemMoved(){},
+                    itemMoved(e){
+                        let dataid = e.dataid;
+                        $('.workpanel-item[data-id="'+e.dataid+'"]').remove();
+                        if(!$('#workpanel .workpanel-item').length){
+                            essayInit([{
+                                key: 'B' + pageConfig.childIndex++,
+                                data: {type:0,val:null},
+                            }]);
+                        }
+                    },
                  }
             });
+            pageConfig.componentList.push(vueComponent);
         });
     }
 
     $(function(){
         essayInit(pageConfig.essay);
+        $('#save-draft').click(function () {
+            let items = document.querySelectorAll('.workpanel-item');
+            let datas = [];
+            items.forEach(function(obj,ind){
+                datas.push({key:obj.getAttribute('data-id'),data:null});
+            });
+            pageConfig.componentList.forEach(function(obj){
+//                console.log(obj.$data.record.key);
+                let valIndex = findIndexByPrimaryAttr(datas,'key',obj.$data.record.key);
+                if(valIndex !== false){
+                    datas[valIndex].data = obj.$data.currentData;
+                }
+
+            });
+
+            let newDatas = datas.filter(function(obj){
+                return obj.data.type?true:false;
+            });
+            console.log(JSON.stringify(newDatas));
+            $.ajax({url:'/storagework',data:{essay:JSON.stringify(newDatas)}}).success(function(data){
+                let jsonObj = JSON.parse(data);
+                console.log(jsonObj);
+            });
+        });
+
+        $('.img-candy-paper').mouseover(function(){
+            $(this).find('.mani').show();
+        }).mouseleave(function(){
+            $(this).find('.mani').hide();
+        });
     });
 
-//    new Vue({
-//        'el':'#workpanel',
-//        data:{essay:[{key:'A001',data:{type:2,val:'/images/work/1492137054740.jpg'}},{key:'A002',data:{type:1,val:'这张图片'}}],childIndex:1},
-//        methods:{
-//            itemDone:function(e){
-//                console.log(e);
-//                console.log(this.isLastKeyInData(e.dataid));
-//                if(this.isLastKeyInData(e.dataid)){
-//                    this.essay.push({key:'B' + (this.childIndex++),data:e.data});
-//                }else{
-//                    var indOfItem = this.indexInData(e.dataid);
-//                    console.log('位置:' + indOfItem);
-//                    this.essay.splice(indOfItem,0,{key:'B' + (this.childIndex++),data:e.data});
-//                }
-//            },
-//            itemMoved:function(e){
-//
-//            },
-//            indexInData:function(keyVal){
-//                console.log(keyVal);
-//                var indOfItem = 0;
-//                this.essay.forEach(function(obj,ind){
-//                    console.log(ind);
-//                    if(obj.key == keyVal){
-//                        indOfItem = ind + 1;
-//                        return false;
-//                    }
-//                })
-//                return indOfItem;
-//            },
-//            isLastKeyInData:function(keyVal){
-//                return (this.essay[this.essay.length - 1]['key'] == keyVal)?true:false;
-//            }
-//        }
-//    });
+
 </script>
 </html>

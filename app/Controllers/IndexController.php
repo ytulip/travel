@@ -18,6 +18,16 @@ class IndexController{
         exit;
     }
 
+    /**
+     * 将一个work存储起来
+     */
+    public function storagework(){
+        $object = new EssayModel();
+        $insertId = $object->insert(\MM\MArray::arrayOnly($_REQUEST,['essay']));
+        echo json_encode(['status'=>true,'data'=>$insertId]);
+        exit;
+    }
+
     static public function input($index,$default=''){
         if(isset($_REQUEST[$index]) && ($_REQUEST[$index] !== '')){
             return $_REQUEST[$index];
