@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章列表</title>
+    <script src="/public/js/react.js"></script>
+    <script src="/public/js/react-dom.js"></script>
+    <script src="/public/js/browser.min.js"></script>
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+
+        .video-js:hover{
+            background: none;
+        }
+
+        .vjs-user-active{
+            background: none;
+        }
+
+        .vjs-big-play-button{
+            background: none !important;
+        }
+
+        .video-js .vjs-big-play-button:hover{
+            background: none;
+        }
+
+
+        .video-js .vjs-big-play-button {
+            font-size: 0;
+            width: 48px;
+            height: 48px;
+            background: none;
+            /*font-size: 1.5em;*/
+            /*width: 8rem;*/
+            /*height: 8rem;*/
+            /*outline: 0;*/
+            /*border: 0.5em solid #dc3f33;*/
+            /*background-color: rgba(0,0,0,0.25);*/
+            /*border-radius: 50%;*/
+            /*cursor: pointer;*/
+            -webkit-transform: translateZ(0) translate(-50%, -50%);
+            transform: translateZ(0) translate(-50%, -50%);
+            -webkit-transition: opacity 0.25s linear;
+            /*transition: opacity 0.25s linear;*/
+        }
+
+
+        .video-js .vjs-big-play-button:before {
+            font-size: 0;
+            background-image:url('/public/images/play.png');
+            background-size: 48px 48px;
+            /*text-align: center;*/
+            /*font-size: 5em;*/
+            /*padding-left: 0.1em;*/
+            /*width: 8rem;*/
+            /*height: 1rem;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*color:#dc3f33;*/
+            /*-webkit-transform: translateZ(0) translate(-50%, -50%);*/
+            /*transform: translateZ(0) translate(-50%, -50%);*/
+        }
+
+        .img-wrap img{
+            width: 100%;
+        }
+
+        .too-height{
+            padding: 0 160px;
+            background-color: #000000;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .content-panel{padding: 0 12px;}
+            .header-wrap{width: 100%;}
+            .content-container{width: 100%;}
+
+            .content-container .articles {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .video-wrap {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .work-panel{
+            width: 680px;
+            text-align: left;
+        }
+
+
+        .work-bar ul{display:none;margin: 0;padding: 0}
+        .work-bar ul li{display: inline-block;line-height: 68px;margin-left: 24px;}
+        .work-bar a{cursor: pointer;}
+        .work-bar span{display: inline-block;line-height: 28px;vertical-align: middle;}
+
+        .work-bar [class $= "icon"]{
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+            margin-right: 10px;
+            /*background: url(/images/post/new_notes/nn_v2/nn_sprite_v25.png) -178px -29px no-repeat;*
+             */
+            background-image: url('/public/images/nn_sprite_v25.png');
+            background-repeat: no-repeat;
+            /*line-height: 200px;*/
+            overflow: hidden;
+            vertical-align: middle;
+        }
+
+        .add-icon{
+            background-position: -120px 0;
+        }
+
+        .add-txt-icon{
+            background-position: -207px -29px;
+        }
+        .add-img-icon{
+            background-position: -178px -29px;;
+        }
+        .add-media-icon{background-position:-236px -29px;}
+
+        .textare-active{
+            width: 600px;
+            overflow: hidden;
+        }
+
+        textarea{
+            width:600px;
+            height: 208px;
+            box-sizing: border-box;
+            padding: 7px;
+            font-size: 14px;
+        }
+        .save-btn{
+            width: auto;
+            margin-right: 0;
+            background: #ffa800;
+            padding: 0 25px;
+            line-height: 26px;
+            height: 26px;
+            color: #fff;
+            font-size: 14px;
+            float: right;
+            border-radius: 5px;
+            margin-top: 25px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .edit_again{
+            width: 23px;
+            height: 20px;
+            background: url('/public/images/sprite_v33.png') -198px -427px no-repeat;
+            line-height: 200px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        /*.editagainrotate{*/
+        /*transform: rotate(45deg);*/
+        /*-webkit-transform: rotate(45deg);*/
+        /*-moz-transform: rotate(45deg);*/
+        /*}*/
+
+        .editbarshow{
+            display: inline-block !important;
+        }
+
+        /*.work-area{*/
+        /*margin-top: 8px;*/
+        /*}*/
+
+        .work-bar{line-height: 68px;}
+        textarea{outline: none;}
+
+
+        .img-upload-container{font-size: 0;border: solid 1px #e5e5e5;box-shadow: 0 3px 3px rgba(0,0,0,.1);padding: 14px 24px;}
+        .img-mobile,.img-pc{display: inline-block;font-size: 16px;text-align: center;}
+
+        .img-mobile{border-right: 1px solid #e5e5e5;width: 246px;}
+
+        .imageshow img{width: 100%;margin-top: 20px;}
+        .draft-mani{    text-align: left;
+            color: #ff9e00;
+            font-size: 20px;cursor: pointer;}
+
+        .img-candy-paper{position:relative;text-align:center;overflow:hidden;font-size: 0;}
+        .img-candy-paper a{overflow: hidden;display: inline-block;height: 27px;}
+        .img-candy-paper img{max-width:100%;margin: 0;display: inline-block}
+        .img-candy-paper .mani{position:absolute;top:0;right: 0;background-color: #030303;opacity: .4;cursor: pointer;display: none;}
+        .edit-item{margin-bottom: 20px;}
+    </style>
+
+    <style>
+        #essay-list{
+
+        }
+
+        .essay-item{
+            width: 760px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            margin-top: 20px;
+
+
+            border: 1px solid #dbe2e8;
+            border-radius: 2px;
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(46,61,73,.08);
+        }
+
+
+
+        #essay-list h3 a{
+           color:#292525;
+        }
+
+        #essay-list p{
+            color:#4a4a4a;
+            font-size: 14px;
+        }
+
+        .i-love{
+            display: inline-block;
+            background-size: 18px 18px;
+            width: 18px;
+            height: 18px;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAABJlJREFUWAntl1toXFUUhjO3XFoSfIhW0gtYpEWQWqEo6ovQB2mk0rykaR0nZpKoLUEQikIx1VopKAVBpKUmmZBprCVaxJZGX8SnplhFTBW03sE2+KAPJpjrTOL37+59PJnMTCa2PUV0w5619tprrf+ftfecs6as7P/xL6tAqBDfubm5UG9v7+ZsNtsUCoXuw28Vtizye+bZ8vLyI83Nzd/mi+/r61s3PT29i70HmLcTH0FeIv5cJBI50dLS8hG2uXyxeQn19PTcNTs7e5iA+/MFyaaEjONVVVW74/H4qGz9/f01ExMTh9nbyV7e3PJjDIXD4d2tra3DV5Z/fy4I6u7u3sb22ySsJPEI+lG+1alYLPbj5ORklPUd7MWRCeYy5g/sP4Is40ucZm8t6jgzjf0Ytm8qKyszMzMza6m2/J7Ep47ck5BqSiaT72PzxjxCVGYLzkqqEr9JwB6+xZjn7VPS6fRtHMsAvpswX7Jbq5CfVlRUbE8kEj/53D0VjGpIHsLwBKSyzK1gfOAcPEKc+0oAvmCjFqeX29raOp1TITk4OFgxMjLyIaQelA9xH9fV1W2pr6+fKhTj7JzEAeKeZ/0b93Ej9/Gy9sLOgZK+hC4yZ2C8z9mLSQHX1NRsI+ZrTfSGUsgopzCIGUSttdgGyhCi/Gtg+xiWDOfegWPeX4CJyPlobGz8g5jtmtJztgsuhUFlOnDICFsc5GwIcVQN6DGc3uUn+bM2ljKI+VJzKTHy1T0TJmrMcvCO7CE5cIlPSQY8Tlu8KxzsYr0khM7bdWAiGo1+IjCObZ2ku9QrzCIc/lUyyEERDCZHd6twDSHYGckDbDZIMsJymI6Dq9Dv2uRJfLNkkGN0dPQWi2c4GEKU66KMmUzm7iDJCIsj2yjpOLgKnZORd81mySCHD9NwMIRg+Z4lsWNgYKA8KEIWa4fwHAdDiDfu55RsGHvt2NhYMihCFkuvq2FxMMQcOMYD0rntL9KY3eTs10sKQ1jK77Cluzukl91J1kM4reBc+5FeJyDHazmU22Lo+TdksQ2ER0grnpqPI8YJeJj24AXZrsdQbmGQe9xiejDzCPGC/I7LpV5YZdxnu0fP+VooNGgNym0xnhKmP+88QtqgfGlIqXlS0/xOV1dXiz/ganTloltUlxkSBk3gsdx8CwjJQc0TYj9TPXSKRIt2j/gVHTZHCifl3G8xFsQUvbiUt51vc4QZocwpOsIOmrCJBVmKGHjWVPF6eIMcSXKoh94Fma5CIUUJKYh7tJVkJ1CXkewiM07Czwol9Nv5QpuI1S9W7c04sU0ck+t//K6evigheVLuDSR7i8R3sswwX+WfxUE6vj+1nztoR5dPTU3txf4sM0rsV8Q+2t7efiHXN3ddEiEF2X8YB1GfIbniLnMxn+MJexxA04PLnkqldnJxX2F/pbW/xj+RvaU2/yUTAsAMAO8F8HXA75EB0Av6xUjH3ol9g7Wfx/40hE1HKFspY8mElFSV4H4kUPV4WO0HguAvrDu5Z2lXOf/+Yvo/IuSS6m2tFySV2SMbFTlUXV2d4pc47XxuiKRKYc0bAv6fA/0LRVL+49cDQakAAAAASUVORK5CYII=");
+        }
+
+        .i-comment{
+            display: inline-block;
+            background-size: 18px 18px;
+            width: 18px;
+            height: 18px;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAZJJREFUWAntlr1KxEAUhTebNCI+gCxiqyAmYBrfQBG08AU2fy5Y2dvb2djmRyvBtGthZUofwVSCtY2mWtAke5IqK9edmaCShQkM2cy5986Xcyfs9HryWjAHlIrX9/2yC9ye5yn9LoA0GbTmQ0XYfP6v380Odc4hCcTaBtIh6RDLAZYu95B0iOUAS5d7SDrEcoClyz3EcmjmxIiT2/MPCa84Te5RWhiGK0VRRNC2KF10bgYIyRtUAUVRvsfVYVEUrQHmHg/bVF6buXohTdM2qeSyLNfzPH+gNLi5A20MbRUjVVV1CPAPKlZkrgayLCulkoIg+KLm0aZDwN5iLEN/xAsdo8Y7FSs6R7ZiXhHAnKFNl4jp47rWdX1kmubnvBwRjRsojmM1y7IrwJyiNSXGueM4FyKL8cRyAaE1S4AZ474PkAnuQ9d173gWEI3hAkLRASAGgHnDOALMk+hCvPG8QFW9FHvmwLbtF97ibeK4/jrgSoIvafevYaoXYDoEmBvDME5+80tq41ydkyQJE7h18UVJnAKpRm/Sbej9vwAAAABJRU5ErkJggg==");
+        }
+
+        .item-footer{
+            overflow: hidden;
+        }
+
+        .item-footer sup{ color:#9e9e9e;margin-left: 4px;}
+
+        .item-footer .i-text{
+            display: inline-block;
+            vertical-align: top;
+            color:#9e9e9e;
+            line-height: 18px;
+        }
+
+        .img-show{
+            width: 100%;
+            height: 240px;
+        }
+    </style>
+</head>
+<body>
+<div class="content-container">
+    <div id="essay-list">
+        <!--<div class="essay-item">-->
+            <!--<div class="item-header">-->
+            <!--</div>-->
+            <!--<div class="item-body">-->
+                <!--<div class="img-candy-paper"></div>-->
+                <!--<h3><a>总要从一个地方开始&#45;&#45;HONG KONG</a></h3>-->
+                <!--<p>2016年3月，她从老家来到了深圳。据说一起旅游能巩固和提升感情。于是，在抵达的第二个周末，我们收拾行囊，去了和深圳只有一河之隔的香港。</p>-->
+            <!--</div>-->
+            <!--<div class="item-footer">-->
+                <!--<div style="display: inline-block;float: right;">-->
+                    <!--<span><i class="i-love"></i><sup>22</sup></span>-->
+                    <!--<a style="margin-left: 20px;"><i class="i-comment"></i><sup>55</sup></a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+</body>
+<script src="/public/vue.js"></script>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script>
+    $(function(){
+        $.get('/essayList',{},function(data){
+            var innerHtml = '';
+            $.each(data.data,function(ind,obj){
+                innerHtml += `<div class="essay-item">
+            <div class="item-header">
+            </div>
+            <div class="item-body">
+                <div class="img-candy-paper"></div>
+                <h3><a>${obj.essay_title}</a></h3>
+                <div class="img-show" style="background-size: cover;background-position: center center;background-repeat: no-repeat;background-image: url('${obj.cover}')"><a href="editjs.html?id=${obj.id}" style="display: block;height: 100%;width: 100%;cursor: pointer;"></a></div>
+                <p>${obj.segment}</p>
+            </div>
+            <div class="item-footer">
+                <div style="display: inline-block;float: right;">
+                    <span><i class="i-love"></i><sup>22</sup></span>
+                    <a style="margin-left: 20px;"><i class="i-comment"></i><sup>55</sup></a>
+                </div>
+            </div>
+        </div>`;
+            });
+            $('#essay-list').html(innerHtml);
+        },'json');
+    });
+</script>
+</html>

@@ -118,6 +118,14 @@
             vertical-align: middle;
         }
 
+        .add-cover-img-icon{
+            background-image: url('/public/images/nn_sprite_v25.png');
+            background-repeat: no-repeat;
+            width: 67px;
+            height: 67px;
+            background-position: -10px 0;
+        }
+
         .add-icon{
             background-position: -120px 0;
         }
@@ -202,12 +210,19 @@
         .img-candy-paper a{overflow: hidden;display: inline-block;height: 27px;}
         .img-candy-paper img{max-width:100%;margin: 0;display: inline-block}
         .img-candy-paper .mani{position:absolute;top:0;right: 0;background-color: #030303;opacity: .4;cursor: pointer;display: none;}
+        .edit-item{margin-bottom: 20px;}
     </style>
 </head>
 <body>
 <div class="content-container">
     <!--<div class="content-panel sticks"></div>-->
     <div>
+
+        <div style="text-align: left;padding: 64px;border: 1px solid #eeeeee;" id="img_bg">
+            <div style="text-align: center;"><i  style="display: inline-block;" class="add-cover-img-icon" id="cover_img_btn"></i></div>
+            <input placeholder="填写标题" style="box-sizing: border-box;padding: 12px;line-height: 30px;width: 100%;font-size: 24px;" name="essay_title"/>
+        </div>
+
         <div class="work-panel" id="workpanel">
             <!--<div v-for="segement in essay">-->
                 <!--<editor-bar v-bind:dataid="segement.key" v-on:i-have-done="itemDone" v-on:i-have-moved="itemMoved" v-bind:defaultvalue="segement" :key="segement.key"></editor-bar>-->
@@ -231,6 +246,13 @@
         <div class="catalogue"></div>
     </div>
 </div>
+
+<div id="vue_alter">
+<div  v-if="mask" style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:99;"><div class="cell" style="width:100%;height:100%;display:table"><div class="card" style="display:table-cell;text-align:center;vertical-align:middle">
+    <span style="display: inline-block;padding: 7px 14px;background-color: #000000;opacity: .4;color:#ffffdd">保存成功</span>
+</div></div></div>
+</div>
+
 </body>
 <script src="/public/vue.js"></script>
 <script type="text/x-template" id="editor-bar">
@@ -246,12 +268,12 @@
             </ul>
         </div>
         <div class="work-area textare-active">
-            <div v-if="currentEdit & importtext" style="overflow: hidden;">
+            <div v-if="currentEdit & importtext" style="overflow: hidden;" class="edit-item">
                 <textarea placeholder="此处添加文字" v-model="content"></textarea>
                 <div><button class="save-btn" v-on:click="textareSave">完成</button></div>
             </div>
 
-            <div v-if="currentEdit & importimage" style="overflow: hidden;margin-bottom: 20px;">
+            <div v-if="currentEdit & importimage" style="overflow: hidden;margin-bottom: 20px;" class="edit-item">
                 <div class="img-upload-container">
                     <div class="img-mobile">
                         <img width="156px" src="https://graphis.zhuyan.me/data/ytulipberry.jpg">
@@ -291,7 +313,19 @@
     </div>
 </script>
 <script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script src="/public/simple.uploadimg.js"></script>
 <script>
+//    window.onbeforeunload = function(){
+//        return "文章正在被编辑是否确定离开？";
+//    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
     function findIndexByPrimaryAttr(stack,needleAttr,needle){
         var index = false;
         stack.forEach(function(obj,ind){
@@ -335,13 +369,15 @@
         methods:{
             textareSave:function(e){
                 let val = this.currentRecord();
+
                 this.currentEdit = 0;
                 this.currentShow = this.showtext;
                 this.textval =  this.content;
                 if((!this.content) && (val.type == 0 || val.type != (this.showtext))){
                     this.$emit('i-have-moved',{'dataid':this.dataid,'data':null});
                 }else{
-                    this.$emit('i-have-done',{'dataid':this.dataid,'data':val,newdata:this.currentRecord()});
+                    console.log('文本框完成:');
+                    this.$emit('i-have-done',{'dataid':this.dataid,'data':val,'newdata':this.currentRecord()});
                 }
             },
             spread:function(){
@@ -395,10 +431,12 @@
                             success:function(data){
                                 if(data.status){
 
-                                    let oldData = a.currentShow();
+                                    let oldData = a.currentRecord();
+                                    a.currentEdit = 0;
                                     a.currentShow = a.imageshow;
                                     a.imgval = data.path;
-                                    a.$emit('i-have-done',{'dataid':a.dataid,'data':oldData,'newdata':a.currentShow()});
+
+                                    a.$emit('i-have-done',{'dataid':a.dataid,'data':oldData,'newdata':a.currentRecord()});
                                 }
                             }
                         });
@@ -412,10 +450,26 @@
     });
 
     let pageConfig = {
+        id:1,
         essay:[{key:'A001',data:{type:2,val:'/images/work/1492137054740.jpg'}},{key:'A002',data:{type:1,val:'这张图片'}}],
         childIndex:1,
-        componentList:[]
+        componentList:[],
+        edited:false
     };
+    pageConfig.componentAlter = new Vue({
+        el:'#vue_alter',
+        data:{mask:0},
+        methods:{
+            show:function(){
+                this.mask = 1;
+                (function (a) {
+                    setTimeout(function(){
+                        a.mask = 0;
+                    },2000)
+                })(this);
+            }
+        }
+    });
 
     function isLastWorkpanelItem(dataid){
         return (dataid == $('#workpanel').find('.workpanel-item:last').attr('data-id'))?true:false;
@@ -444,7 +498,7 @@
 
                         if (e.data.type || isLastWorkpanelItem(dataid)) {
                             essayInit([{
-                                key: 'B' + pageConfig.childIndex++,
+                                key: 'B' + new Date().getTime() +pageConfig.childIndex++,
                                 data: e.data,
                                 sibling: dataid
                             }]);
@@ -455,7 +509,7 @@
                         $('.workpanel-item[data-id="'+e.dataid+'"]').remove();
                         if(!$('#workpanel .workpanel-item').length){
                             essayInit([{
-                                key: 'B' + pageConfig.childIndex++,
+                                key: 'B' + new Date().getTime()+pageConfig.childIndex++,
                                 data: {type:0,val:null},
                             }]);
                         }
@@ -467,12 +521,33 @@
     }
 
     $(function(){
-        essayInit(pageConfig.essay);
+        //essayInit(pageConfig.essay);
+
+        new SimpleUploadimg('#cover_img_btn',{type:'bg',bg:'#img_bg'});
+
+        pageConfig.id = getQueryString('id');
+        if(pageConfig.id){
+            $.ajax({url:'/essay',data:{id:pageConfig.id}}).success(function(data){
+                let jsonData = JSON.parse(data);
+                $('input[name="essay_title"]').val(jsonData.title);
+                if(jsonData.cover){
+                    document.querySelector('#img_bg').style.backgroundImage = "url("+jsonData.cover+")";
+                    document.querySelector('#img_bg').setAttribute('img-data',jsonData.cover);
+                }
+                document.querySelector('#img_bg').style.backgroundSize = "cover";
+                pageConfig.essay = jsonData.data;
+                essayInit(pageConfig.essay);
+            });
+        }else{
+            pageConfig.essay = [{key:"A001",data:{type:0,val:''}}];
+            essayInit(pageConfig.essay);
+        }
+
         $('#save-draft').click(function () {
             let items = document.querySelectorAll('.workpanel-item');
             let datas = [];
             items.forEach(function(obj,ind){
-                datas.push({key:obj.getAttribute('data-id'),data:null});
+                datas.push({key:obj.getAttribute('data-id'),data:{type:0,val:''}});
             });
             pageConfig.componentList.forEach(function(obj){
 //                console.log(obj.$data.record.key);
@@ -486,16 +561,15 @@
             let newDatas = datas.filter(function(obj){
                 return obj.data.type?true:false;
             });
-            console.log(JSON.stringify(newDatas));
-            $.ajax({url:'/storagework',data:{essay:JSON.stringify(newDatas)}}).success(function(data){
+            $.ajax({url:'/storagework',data:{essay:JSON.stringify(newDatas),id:pageConfig.id,essay_title:$("input[name='essay_title']").val(),cover:document.querySelector("#img_bg").getAttribute('img-data')}}).success(function(data){
                 let jsonObj = JSON.parse(data);
-                console.log(jsonObj);
+                pageConfig.componentAlter.show();
             });
         });
 
-        $('.img-candy-paper').mouseover(function(){
+        $('body').on('mouseover','.img-candy-paper',function(){
             $(this).find('.mani').show();
-        }).mouseleave(function(){
+        }).on('mouseout','.img-candy-paper',function(){
             $(this).find('.mani').hide();
         });
     });

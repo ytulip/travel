@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+</head>
+<body>
+</body>
+<script>
+    var expression = /(\"\w+\":\"\")/g;
+    var resStr = '"Stores":"","StoresName":"借钱么-深圳","RSerialNo":"4403000471"';
+    var result = resStr.replace(expression,'<span style="color:#ff1f30;">$1</span>');
+    console.log(result);
+</script>
+</html>
