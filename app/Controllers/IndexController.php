@@ -28,7 +28,12 @@ class IndexController{
      *
      */
     public function essayList(){
-        $list = DB::select('select * from essays');
+        if($type = intval(IndexController::input('type'))){
+            $list = DB::select('select * from essays where essay_type = ' . $type);
+        }else{
+            $list = DB::select('select * from essays');
+        }
+        //$list = DB::select('select * from essays');
         for($i=0 ; $i < count($list); $i++){
             $essay = json_decode($list[$i]->essay);
             $segmentFirst = $essay[0];
@@ -57,6 +62,47 @@ class IndexController{
             echo json_encode(['status' => true, 'data' => $insertId]);
             exit;
         }
+    }
+
+    public function markdown()
+    {
+
+        $mdStr = \Michelf\MarkdownExtra::defaultTransform(file_get_contents(storage_path . '/md/demo.md'));
+        echo '<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+    <link href="/css/markdown.css" rel="stylesheet"></link> 
+  </head>
+  <body>'.$mdStr.'
+  </body>
+</html>';
+        exit;
+    }
+
+    public function blogs(){
+        return View::show('home.html',[]);
+    }
+
+    public function post()
+    {
+        $id = IndexController::input('id');
+        $mdStr = \Michelf\MarkdownExtra::defaultTransform(file_get_contents(storage_path . '/md/demo.md'));
+        return View::show('blog.html',array(
+            'article'=>$mdStr
+        ));
+    }
+
+    public function blog()
+    {
+        $id = IndexController::input('id');
+        $mdStr = \Michelf\MarkdownExtra::defaultTransform(file_get_contents(storage_path . '/md/demo.md'));
+        return View::show('blog.html',array(
+            'article'=>$mdStr
+        ));
     }
 
     static public function input($index,$default=''){

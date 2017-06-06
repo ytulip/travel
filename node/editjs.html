@@ -211,9 +211,32 @@
         .img-candy-paper img{max-width:100%;margin: 0;display: inline-block}
         .img-candy-paper .mani{position:absolute;top:0;right: 0;background-color: #030303;opacity: .4;cursor: pointer;display: none;}
         .edit-item{margin-bottom: 20px;}
+
+        .edit-process-bar
+        {
+            border-bottom: 1px solid #d7cbba;
+            line-height: 67px;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        .edit-process-bar-fix{
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
     </style>
 </head>
 <body>
+<div class="edit-process-bar" id="edit_process_bar">
+    <div style="margin: 0 auto;width: 1000px;">
+    <a style="float: right;color: #ff9e00;
+    font-size: 20px;
+    cursor: pointer;" class="save-draft">保存草稿</a>
+    </div>
+</div>
 <div class="content-container">
     <!--<div class="content-panel sticks"></div>-->
     <div>
@@ -241,7 +264,7 @@
             <!--</div>-->
         </div>
         <div class="draft-mani">
-            <a id="save-draft">保存草稿</a>
+            <a id="save-draft" class="save-draft">保存草稿</a>
         </div>
         <div class="catalogue"></div>
     </div>
@@ -318,6 +341,18 @@
 //    window.onbeforeunload = function(){
 //        return "文章正在被编辑是否确定离开？";
 //    }
+    $(window).scroll(function () {
+        var scrollValue=$(window).scrollTop();
+        if (scrollValue > 100){
+            if(!$('#edit_process_bar').hasClass('edit-process-bar-fix')){
+                $('#edit_process_bar').addClass('edit-process-bar-fix').fadeIn();
+            }
+        } else {
+            if($('#edit_process_bar').hasClass('edit-process-bar-fix')) {
+                $('#edit_process_bar').removeClass('edit-process-bar-fix').fadeIn();
+            }
+        }
+    });
 
 
     function getQueryString(name) {
@@ -365,6 +400,9 @@
             }
 
             return datas;
+        },
+        created:{
+
         },
         methods:{
             textareSave:function(e){
@@ -543,7 +581,7 @@
             essayInit(pageConfig.essay);
         }
 
-        $('#save-draft').click(function () {
+        $('.save-draft').click(function () {
             let items = document.querySelectorAll('.workpanel-item');
             let datas = [];
             items.forEach(function(obj,ind){

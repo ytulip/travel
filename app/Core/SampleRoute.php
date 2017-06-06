@@ -61,7 +61,7 @@ class SampleRoute{
 
         $funName = end($this->_route_args);
 //        var_dump($funName);
-        $funName = $funName?$funName:'home';
+        $funName = $funName?$funName:'blogs';
         return $controller::$funName();
     }
 

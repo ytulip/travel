@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章列表</title>
+    <script src="/public/js/react.js"></script>
+    <script src="/public/js/react-dom.js"></script>
+    <script src="/public/js/browser.min.js"></script>
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+
+    <style>
+        /********start of header**********/
+        header{
+            background-color: #333;
+            line-height: 60px;
+            height: 60px;
+            position: fixed;
+            top:0;
+            right: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        header .logo-img{vertical-align: middle;}
+        .header-wrap{
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-menu-item{
+            color:#eeeeee;
+        }
+        /******** end  of header*********/
+
+        /******** start of list *********/
+        #essay-list{
+            float: left;
+        }
+
+        .essay-item{
+            width: 760px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            margin-top: 20px;
+
+
+            border: 1px solid #dbe2e8;
+            border-radius: 2px;
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(46,61,73,.08);
+        }
+
+
+
+        #essay-list h3 a{
+            color:#292525;
+        }
+
+        #essay-list p{
+            color:#4a4a4a;
+            font-size: 14px;
+        }
+
+        .i-love{
+            display: inline-block;
+            background-size: 18px 18px;
+            width: 18px;
+            height: 18px;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAABJlJREFUWAntl1toXFUUhjO3XFoSfIhW0gtYpEWQWqEo6ovQB2mk0rykaR0nZpKoLUEQikIx1VopKAVBpKUmmZBprCVaxJZGX8SnplhFTBW03sE2+KAPJpjrTOL37+59PJnMTCa2PUV0w5619tprrf+ftfecs6as7P/xL6tAqBDfubm5UG9v7+ZsNtsUCoXuw28Vtizye+bZ8vLyI83Nzd/mi+/r61s3PT29i70HmLcTH0FeIv5cJBI50dLS8hG2uXyxeQn19PTcNTs7e5iA+/MFyaaEjONVVVW74/H4qGz9/f01ExMTh9nbyV7e3PJjDIXD4d2tra3DV5Z/fy4I6u7u3sb22ySsJPEI+lG+1alYLPbj5ORklPUd7MWRCeYy5g/sP4Is40ucZm8t6jgzjf0Ytm8qKyszMzMza6m2/J7Ep47ck5BqSiaT72PzxjxCVGYLzkqqEr9JwB6+xZjn7VPS6fRtHMsAvpswX7Jbq5CfVlRUbE8kEj/53D0VjGpIHsLwBKSyzK1gfOAcPEKc+0oAvmCjFqeX29raOp1TITk4OFgxMjLyIaQelA9xH9fV1W2pr6+fKhTj7JzEAeKeZ/0b93Ej9/Gy9sLOgZK+hC4yZ2C8z9mLSQHX1NRsI+ZrTfSGUsgopzCIGUSttdgGyhCi/Gtg+xiWDOfegWPeX4CJyPlobGz8g5jtmtJztgsuhUFlOnDICFsc5GwIcVQN6DGc3uUn+bM2ljKI+VJzKTHy1T0TJmrMcvCO7CE5cIlPSQY8Tlu8KxzsYr0khM7bdWAiGo1+IjCObZ2ku9QrzCIc/lUyyEERDCZHd6twDSHYGckDbDZIMsJymI6Dq9Dv2uRJfLNkkGN0dPQWi2c4GEKU66KMmUzm7iDJCIsj2yjpOLgKnZORd81mySCHD9NwMIRg+Z4lsWNgYKA8KEIWa4fwHAdDiDfu55RsGHvt2NhYMihCFkuvq2FxMMQcOMYD0rntL9KY3eTs10sKQ1jK77Cluzukl91J1kM4reBc+5FeJyDHazmU22Lo+TdksQ2ER0grnpqPI8YJeJj24AXZrsdQbmGQe9xiejDzCPGC/I7LpV5YZdxnu0fP+VooNGgNym0xnhKmP+88QtqgfGlIqXlS0/xOV1dXiz/ganTloltUlxkSBk3gsdx8CwjJQc0TYj9TPXSKRIt2j/gVHTZHCifl3G8xFsQUvbiUt51vc4QZocwpOsIOmrCJBVmKGHjWVPF6eIMcSXKoh94Fma5CIUUJKYh7tJVkJ1CXkewiM07Czwol9Nv5QpuI1S9W7c04sU0ck+t//K6evigheVLuDSR7i8R3sswwX+WfxUE6vj+1nztoR5dPTU3txf4sM0rsV8Q+2t7efiHXN3ddEiEF2X8YB1GfIbniLnMxn+MJexxA04PLnkqldnJxX2F/pbW/xj+RvaU2/yUTAsAMAO8F8HXA75EB0Av6xUjH3ol9g7Wfx/40hE1HKFspY8mElFSV4H4kUPV4WO0HguAvrDu5Z2lXOf/+Yvo/IuSS6m2tFySV2SMbFTlUXV2d4pc47XxuiKRKYc0bAv6fA/0LRVL+49cDQakAAAAASUVORK5CYII=");
+        }
+
+        .i-comment{
+            display: inline-block;
+            background-size: 18px 18px;
+            width: 18px;
+            height: 18px;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAZJJREFUWAntlr1KxEAUhTebNCI+gCxiqyAmYBrfQBG08AU2fy5Y2dvb2djmRyvBtGthZUofwVSCtY2mWtAke5IqK9edmaCShQkM2cy5986Xcyfs9HryWjAHlIrX9/2yC9ye5yn9LoA0GbTmQ0XYfP6v380Odc4hCcTaBtIh6RDLAZYu95B0iOUAS5d7SDrEcoClyz3EcmjmxIiT2/MPCa84Te5RWhiGK0VRRNC2KF10bgYIyRtUAUVRvsfVYVEUrQHmHg/bVF6buXohTdM2qeSyLNfzPH+gNLi5A20MbRUjVVV1CPAPKlZkrgayLCulkoIg+KLm0aZDwN5iLEN/xAsdo8Y7FSs6R7ZiXhHAnKFNl4jp47rWdX1kmubnvBwRjRsojmM1y7IrwJyiNSXGueM4FyKL8cRyAaE1S4AZ474PkAnuQ9d173gWEI3hAkLRASAGgHnDOALMk+hCvPG8QFW9FHvmwLbtF97ibeK4/jrgSoIvafevYaoXYDoEmBvDME5+80tq41ydkyQJE7h18UVJnAKpRm/Sbej9vwAAAABJRU5ErkJggg==");
+        }
+
+        .item-footer{
+            overflow: hidden;
+        }
+
+        .item-footer sup{ color:#9e9e9e;margin-left: 4px;}
+
+        .item-footer .i-text{
+            display: inline-block;
+            vertical-align: top;
+            color:#9e9e9e;
+            line-height: 18px;
+        }
+
+        .img-show{
+            width: 100%;
+            height: 240px;
+        }
+
+        .aside-title{
+            width: 100%;
+            border-bottom: solid 1px #e9e9ea;
+            text-align: left;
+        }
+
+        .aside-title h3{
+            /*border-bottom: solid 1px #292525;*/
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            line-height: 27px;
+            font-size: 12px;
+        }
+
+        .aside-title h3:after{
+            content: " ";
+            display: block;
+            height: 27px;
+            width: 100%;
+            border-bottom: 1px solid #292525;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .aside-body ul{
+            display: block;
+        }
+
+        .aside-body li{display: block;list-style: none;}
+        /******** end of list **********/
+
+        .content-container{margin-top: 70px;overflow: hidden;margin-bottom: 70px;}
+        .content-container aside{float: left;width: 240px;margin-top: 20px;padding: 0 30px;box-sizing: border-box}
+        footer{padding-bottom: 30px;}
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-wrap">
+        <a href="/"><img src="/public/images/essay_logo_03.png" style="height: 33px" class="logo-img"/></a>
+        <ul class="top-menu-list">
+            <!--<li class="top-menu-item top-menu-item-active">博客</li>-->
+            <!--<li class="top-menu-item">随手拍</li>-->
+            <!--<li class="top-menu-item">手绘</li>-->
+            <!--<li class="top-menu-item">推荐</li>-->
+        </ul>
+    </div>
+</header>
+
+<div class="content-container">
+    <div id="essay-list">
+    </div>
+    <aside>
+        <div class="aside-title"><h3>推荐阅读</h3></div>
+        <ul class="aside-body">
+            <li></li>
+        </ul>
+    </aside>
+</div>
+
+{% include "footer.html" %}
+</body>
+<script src="/public/vue.js"></script>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script>
+    $(function(){
+        $.get('/essayList',{type:2},function(data){
+            var innerHtml = '';
+            $.each(data.data,function(ind,obj){
+                innerHtml += `<div class="essay-item">
+            <div class="item-header">
+            </div>
+            <div class="item-body">
+                <div class="img-candy-paper"></div>
+                <h3><a>${obj.essay_title}</a></h3>
+                <div class="img-show" style="background-size: cover;background-position: center center;background-repeat: no-repeat;background-image: url('${obj.cover}')"><a href="/post?id=${obj.id}" style="display: block;height: 100%;width: 100%;cursor: pointer;"></a></div>
+                <p>${obj.abstract}</p>
+            </div>
+            <div class="item-footer">
+                <div style="display: inline-block;float: right;">
+                    <span><i class="i-love"></i><sup>${obj.vistors}</sup></span>
+                    <a style="margin-left: 20px;"><i class="i-comment"></i><sup>${obj.comments}</sup></a>
+                </div>
+            </div>
+        </div>`;
+            });
+            $('#essay-list').html(innerHtml);
+        },'json');
+    });
+</script>
+</html>

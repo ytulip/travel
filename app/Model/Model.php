@@ -10,6 +10,10 @@ class Model{
 
     public $_test = 123;
 
+    public static function firstOrCreate()
+    {
+
+    }
 
     public function __construct($id = null){
         if($id === null){

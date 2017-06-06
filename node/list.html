@@ -273,21 +273,6 @@
 <body>
 <div class="content-container">
     <div id="essay-list">
-        <!--<div class="essay-item">-->
-            <!--<div class="item-header">-->
-            <!--</div>-->
-            <!--<div class="item-body">-->
-                <!--<div class="img-candy-paper"></div>-->
-                <!--<h3><a>总要从一个地方开始&#45;&#45;HONG KONG</a></h3>-->
-                <!--<p>2016年3月，她从老家来到了深圳。据说一起旅游能巩固和提升感情。于是，在抵达的第二个周末，我们收拾行囊，去了和深圳只有一河之隔的香港。</p>-->
-            <!--</div>-->
-            <!--<div class="item-footer">-->
-                <!--<div style="display: inline-block;float: right;">-->
-                    <!--<span><i class="i-love"></i><sup>22</sup></span>-->
-                    <!--<a style="margin-left: 20px;"><i class="i-comment"></i><sup>55</sup></a>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>
 
@@ -317,6 +302,12 @@
             </div>
         </div>`;
             });
+            innerHtml += `<div class="essay-item" style="height: 180px;">
+            <div style="width: 100%;height: 100%;display: flex;flex-direction: column;justify-content:center;">
+            <div style="text-align: center;"><a href="editjs.html"><img src="/public/images/add_icon.png" style="width: 60px;height: 60px;cursor: pointer;"/></a></div>
+            <p style="text-align: center">新增文章</p>
+</div>
+</div>`;
             $('#essay-list').html(innerHtml);
         },'json');
     });

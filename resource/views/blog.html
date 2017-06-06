@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>点滴生活</title>
+    <link href="/css/markdown.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/share.css"/>
+    <link href="/public/css/style.css" rel="stylesheet" />
+    <link href="/public/js/plugin/topmenu/topmenu.css" rel="stylesheet"/>
+    <link href="http://static.zhuyan.me/highlight/styles/github.css" rel="stylesheet"/>
+    <style>
+        /********start of header**********/
+        header{
+            background-color: #333;
+            line-height: 60px;
+            height: 60px;
+            position: fixed;
+            top:0;
+            right: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        header * {margin: 0}
+
+        header .logo-img{vertical-align: middle;}
+        .header-wrap{
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-menu-item{
+            color:#eeeeee;
+        }
+        /******** end  of header*********/
+    </style>
+
+</head>
+<body>
+<header>
+    <div class="header-wrap">
+        <a href="/"><img src="/public/images/essay_logo_03.png" style="height: 33px" class="logo-img"/></a>
+        <ul class="top-menu-list">
+            <!--<li class="top-menu-item top-menu-item-active" style="cursor: pointer;"><a style="color:#ffffff;" href="/node/blog.html">博客</a></li>-->
+            <!--<li class="top-menu-item">随手拍</li>-->
+            <!--<li class="top-menu-item">手绘</li>-->
+            <!--<li class="top-menu-item">推荐</li>-->
+        </ul>
+    </div>
+</header>
+<div style="display: none;"><img src="/public/images/weshare2.jpg"/></div>
+<div class="share-wrapper">
+    <div class="share-content">
+        <article>
+            <h1>这是一个markdown的例子</h1>
+            <p style="font-size: 14px;text-align: center;font-weight: 100;color:#999999;">2017-05-27</p>
+            {{ article | raw }}
+
+            <!--<div class="media-wrapper"><img src="http://pic.zhuyan.me/2.jpg"/></div>-->
+        </article>
+        <div id="comment-wrapper">
+            <user-comment vid="{{ id }}" view_num="{{ view_num }}"></user-comment>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+</body>
+<script src="/public/assets/js/jquery-1.11.1.js"></script>
+<script src="/public/vue.js"></script>
+{{xtemplate('/comment.vue','comment-component') |  raw}}
+<script src="http://static.zhuyan.me/highlight/highlight.pack.js"></script>
+<script>
+    $('pre code').each(function (i,block) {
+        console.log(456);
+        hljs.highlightBlock(block);
+    });
+</script>
+<script>
+    Vue.component('user-comment',{
+        template:'#comment-component',
+        props:['vid','view_num'],
+        methods:{
+            praise:function(){
+                $.get('/praise?id=' + this.id);
+                this.praisenum =  parseInt(this.praisenum) + 1;
+            },
+            publish:function(){
+                (function(a){
+                    a.mask = 1;
+                    setTimeout(function(){
+                        a.mask = 0;
+                    },2000);
+                    $.ajax(
+                        {
+                            url:'/comment',
+                            type:'get',
+                            data:{id:a.id,nickname:a.nickname,comment:a.comment,replay_to:a.replay_to,parent_id:a.parent_id,email:a.email,comment_level:a.comment_level},
+                            dataType:'json',
+                            success:function(data){
+                                a.comment = '';
+                                if(data.data.comment_level == 1){
+                                    a.commentlist.push(data.data);
+                                }else{
+                                    $.each(a.commentlist,function (ind,obj) {
+                                        if(obj.id == data.data.parent_id){
+                                            a.commentlist[ind].child.push(data.data);
+                                            return false;
+                                        }
+                                    })
+                                }
+                            },
+                            error:function(){
+
+                            }
+                        }
+                    );
+                })(this);
+            },
+            replay:function(e){
+                var y = $('.essay-comment textarea').offset().top;
+                $("html,body").animate({scrollTop:y},200);
+//             console.log(e.target);
+                var el = $(event.currentTarget);
+                var obj = JSON.parse(el.attr('data-replay'));
+                this.comment = '';
+                this.placeholder = "回复@" + obj.replay_to;
+                this.replay_to = obj.replay_to;
+                this.parent_id = obj.parent_id;
+                this.comment_level = 2;
+            }
+        },
+        data:function(){
+            var datas = {};
+            datas.id = this.vid;
+            datas.nickname = '';
+            datas.email = '';
+            datas.praisenum = this.view_num;
+            datas.comment = '';
+            datas.commentlist = null;
+            datas.placeholder = '敢不敢随便说点啥...';
+            datas.replay_to = '';
+            datas.parent_id = 0;
+            datas.comment_level = 1;
+            datas.mask = 0;
+            return datas;
+        },
+        created:function(){
+            (function(a){
+                //置空文本框
+                $.ajax(
+                    {
+                        url:'/commentlist',
+                        type:'get',
+                        data:{id:a.id},
+                        dataType:'json',
+                        success:function(data){
+                            if(data.status){
+                                a.commentlist = data.data;
+                                console.log(a.commentlist );
+                            }
+                        },
+                        error:function(){
+
+                        }
+                    }
+                );
+            })(this);
+        }
+    });
+    new Vue({
+        el:'#comment-wrapper'
+    });
+</script>
+</html>

@@ -1,9 +1,20 @@
-/*
+/*！
+*  SimpleUploadimg
+*  Released under the MIT license
+*/
 
+/**
+ *
+ * @param el
+ * @param params
+ * @constructor
  */
 function SimpleUploadimg(el,params){
     this.$el = $(el); //获得元素的jquery对象
     this.config = params;
+    if(!this.config.bg){
+        this.config.bg = el;
+    }
     (function(a){
         /*临时生产一个input file，挂载在body最后*/
         a.$file = $('<input type="file" style="display: none;"/>');

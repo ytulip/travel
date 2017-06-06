@@ -48,6 +48,16 @@ class ComposerStaticInit718e1f2cd4692af7484bc98587256a85
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'M' => 
+        array (
+            'Michelf' => 
+            array (
+                0 => __DIR__ . '/..' . '/michelf/php-markdown',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'EasyPeasyICS' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
         'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
@@ -64,6 +74,7 @@ class ComposerStaticInit718e1f2cd4692af7484bc98587256a85
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit718e1f2cd4692af7484bc98587256a85::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit718e1f2cd4692af7484bc98587256a85::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit718e1f2cd4692af7484bc98587256a85::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit718e1f2cd4692af7484bc98587256a85::$classMap;
 
         }, null, ClassLoader::class);
