@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      MathML: {
+        extensions: ["content-mathml.js"]
+      }
+});
+</script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script src="http://www.wiris.net/demo/editor/editor"></script>
+    <script>
+        var editor;
+        window.onload = function () {
+            editor = com.wiris.jsEditor.JsEditor.newInstance({'language': 'en'});
+            editor.insertInto(document.getElementById('editorContainer'));
+        }
+    </script>
+</head>
+<body>
+<div id="editorContainer"></div>
+<button onclick="getMathml()">获得mathml</button>
+<p id="mathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>3</mn></msqrt><mo>/</mo><msqrt><mn>2</mn></msqrt></math></p>
+</body>
+<script>
+    function getMathml()
+    {
+        alert(editor.getMathML());
+        document.querySelector("#mathML").innerHTML = editor.getMathML();
+        MathJax.Hub.Typeset();
+//        alert(editor.getLaTeX());
+    }
+</script>
+</html>

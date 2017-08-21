@@ -11,9 +11,18 @@ class ComposerStaticInit718e1f2cd4692af7484bc98587256a85
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zend\\Validator\\' => 15,
+            'Zend\\Stdlib\\' => 12,
+            'Zend\\Escaper\\' => 13,
+        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'Predis\\' => 7,
+            'PhpOffice\\PhpWord\\' => 18,
+            'PhpOffice\\Common\\' => 17,
         ),
         'M' => 
         array (
@@ -30,9 +39,33 @@ class ComposerStaticInit718e1f2cd4692af7484bc98587256a85
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zend\\Validator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-validator/src',
+        ),
+        'Zend\\Stdlib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
+        ),
+        'Zend\\Escaper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
+        'PhpOffice\\PhpWord\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',
+        ),
+        'PhpOffice\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/common/src/Common',
         ),
         'MM\\' => 
         array (
@@ -59,12 +92,98 @@ class ComposerStaticInit718e1f2cd4692af7484bc98587256a85
     );
 
     public static $classMap = array (
+        'AutoLoader' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/AutoLoader.inc',
+        'CheckSign' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CheckSign.inc',
+        'CleanTemp' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CleanTemp.inc',
+        'CreateAreaChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateAreaChart.inc',
+        'CreateBarChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateBarChart.inc',
+        'CreateBubbleChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateBubbleChart.inc',
+        'CreateBubbleXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateBubbleXlsx.inc',
+        'CreateChartFactory' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateChartFactory.inc',
+        'CreateChartRels' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateChartRels.inc',
+        'CreateCompletedXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateCompletedXlsx.inc',
+        'CreateDocument' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateDocument.inc',
+        'CreateDocx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateDocx.inc',
+        'CreateDoughnutChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateDoughnutChart.inc',
+        'CreateElement' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateElement.inc',
+        'CreateEmbeddedElement' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateEmbeddedElement.inc',
+        'CreateEndnote' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateEndnote.inc',
+        'CreateFactory' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateFactory.inc',
+        'CreateFontTable' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateFontTable.inc',
+        'CreateFooter' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateFooter.inc',
+        'CreateFootnote' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateFootnote.inc',
+        'CreateFormElement' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateFormElement.inc',
+        'CreateGraphic' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateGraphic.inc',
+        'CreateGraphicImg' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateGraphicImg.inc',
+        'CreateHeader' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateHeader.inc',
+        'CreateImage' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateImage.inc',
+        'CreateLineChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateLineChart.inc',
+        'CreateLink' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateLink.inc',
+        'CreateList' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateList.inc',
+        'CreateListStyle' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateListStyle.inc',
+        'CreateMacro' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateMacro.inc',
+        'CreateMath' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateMath.inc',
+        'CreateOfPieChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateOfPieChart.inc',
+        'CreatePage' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreatePage.inc',
+        'CreateParagraphStyle' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateParagraphStyle.inc',
+        'CreatePieChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreatePieChart.inc',
+        'CreateProperties' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateProperties.inc',
+        'CreateRadarChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateRadarChart.inc',
+        'CreateScatterChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateScatterChart.inc',
+        'CreateScatterXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateScatterXlsx.inc',
+        'CreateSettings' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateSettings.inc',
+        'CreateShape' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateShape.inc',
+        'CreateSimpleXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateSimpleXlsx.inc',
+        'CreateStructuredDocumentTag' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateStructuredDocumentTag.inc',
+        'CreateStyle' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateStyle.inc',
+        'CreateStyleTable' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateStyleTable.inc',
+        'CreateSurfaceChart' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateSurfaceChart.inc',
+        'CreateTable' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateTable.inc',
+        'CreateTableContents' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateTableContents.inc',
+        'CreateTemplate' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateTemplate.inc',
+        'CreateText' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateText.inc',
+        'CreateTextBox' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateTextBox.inc',
+        'CreateTheme1' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateTheme1.inc',
+        'CreateWebSettings' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateWebSettings.inc',
+        'CreateXML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateXML.inc',
+        'CreateXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CreateXlsx.inc',
+        'CustomHTML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/CustomHTML.inc',
+        'Debug' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Debug.inc',
+        'Docx2Text' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Docx2Text.inc',
+        'DocxUtilities' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/DocxUtilities.inc',
         'EasyPeasyICS' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
+        'EmbedDOCX' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedDOCX.inc',
+        'EmbedDocument' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedDocument.inc',
+        'EmbedHTML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedHTML.inc',
+        'EmbedMHT' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedMHT.inc',
+        'EmbedRTF' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedRTF.inc',
+        'EmbedWordML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/EmbedWordML.inc',
+        'ExtractHTMLContents' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/ExtractHTMLContents.inc',
+        'GenerateDocx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/GenerateDocx.inc',
+        'HTML2DOCX' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/HTML2DOCX.inc',
+        'HTML2WordML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/HTML2WordML.inc',
+        'InterfaceGraphic' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/InterfaceGraphic.inc',
+        'InterfaceXlsx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/InterfaceXlsx.inc',
+        'MSWordInterface' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/MSWordInterface.inc',
+        'MergeDocx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/MergeDocx.inc',
         'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
         'PHPMailerOAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauth.php',
         'PHPMailerOAuthGoogle' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
         'POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.pop3.php',
+        'Parser' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Parser.inc',
+        'PclZip' => __DIR__ . '/..' . '/pclzip/pclzip/pclzip.lib.php',
+        'PhpdocxLogger' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/PhpdocxLogger.inc',
+        'PhpdocxUtilities' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/PhpdocxUtilities.inc',
+        'Phpdocx_Phpdocx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Phpdocx_Phpdocx.inc',
+        'Repair' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Repair.inc',
+        'RepairPDF' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/RepairPDF.inc',
         'SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.smtp.php',
+        'SearchAndReplaceTextWordDocument' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/SearchAndReplaceTextWordDocument.inc',
+        'Text2Docx' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/Text2Docx.inc',
+        'TransformDoc' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/TransformDoc.inc',
+        'TransformDocAdv' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/TransformDocAdv.inc',
+        'WordML' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/WordML.inc',
+        'WordMLFragment' => __DIR__ . '/..' . '/phpdocx/phpdocx/classes/WordMLFragment.inc',
         'ntlm_sasl_client_class' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/ntlm_sasl_client.php',
         'phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
     );
